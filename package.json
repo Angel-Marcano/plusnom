@@ -1,0 +1,12 @@
+{
+  "name": "plusnom",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start:admin": "yarn workspace @plusnom/admin run start",
+    "build:admin": "yarn workspace @plusnom/admin run build",
+    "start:employees": "yarn workspace @plusnom/employees run start",
+    "build:employees": "yarn workspace @plusnom/employees run build"
+  },
+  "workspaces": ["packages/*"]
+}
