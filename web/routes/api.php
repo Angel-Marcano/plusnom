@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PayrollController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +17,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware(['auth:sanctum'])->group(function () {
+    // Route::middleware(['permission:Administrador'])->group(function () {
+        Route::apiResource('employees', EmployeeController::class);
+        Route::apiResource('payrolls', PayrollController::class);
+    // });
+    // Route::get('employees/{employee}/proofs/download', 'EmployeeController@downloadProof');
+
+    // Route::get('revoke', 'AuthController@logout');
+// });
+
+Route::post('authorize', 'AuthController@login');
+Route::post('register', 'AuthController@register');
