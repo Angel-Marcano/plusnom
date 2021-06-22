@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use App\Imports\EmployeesImport;
+use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 
 class EmployeeController extends Controller
@@ -42,16 +44,6 @@ class EmployeeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -73,23 +65,23 @@ class EmployeeController extends Controller
         //
     }
 
+    public function importEmployees(Request $request)
+    {
+        $file = $request->file;
+
+        Excel::import(new EmployeesImport, $file);
+
+        return response()->json([
+            'data' => 'Employees uploaded successfully.'
+        ]);
+    }
+
     public function downloadProof(Employee $employee)
     {
         $vars = ['employee'];
         $pdf = PDF::loadView('pdf.proof-of-work', compact(['employee']));
 
         return $pdf->stream('constancia.pdf');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Employee  $employee
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Employee $employee)
-    {
-        //
     }
 
     /**

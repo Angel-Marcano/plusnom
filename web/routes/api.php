@@ -26,6 +26,7 @@ use App\Http\Controllers\PayrollController;
 
     // Route::get('revoke', 'AuthController@logout');
 // });
+Route::post('employees/import', [EmployeeController::class, 'importEmployees']);
 
 Route::post('authorize', 'AuthController@login');
 Route::post('register', 'AuthController@register');

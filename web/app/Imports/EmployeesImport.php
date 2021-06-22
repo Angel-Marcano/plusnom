@@ -2,16 +2,26 @@
 
 namespace App\Imports;
 
-use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\ToCollection;
+use App\Models\Employee;
+use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class EmployeesImport implements ToCollection
+class EmployeesImport implements ToModel, WithHeadingRow
 {
     /**
-    * @param Collection $collection
-    */
-    public function collection(Collection $collection)
+     * @param array $row
+     *
+     * @return User|null
+     */
+    public function model(array $row)
     {
-        //
+        return new Employee([
+            'document' => $row['cedula'],
+            'full_name' => $row['nombres_y_apellidos'],
+            'admission_date' => $row['fecha_ingreso'],
+            'chargue' => 'obrero contratado',
+            'division' => $row['dependencia']
+        ]);
     }
 }

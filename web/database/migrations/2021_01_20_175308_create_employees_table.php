@@ -16,11 +16,10 @@ class CreateEmployeesTable extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->string('document');
-            $table->string('name');
-            $table->string('surname');
+            $table->string('full_name');
             $table->string('chargue')->nullable();
             $table->string('division')->nullable();
-            $table->date('admission_date');
+            $table->string('admission_date')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
             $table->softDeletes();
