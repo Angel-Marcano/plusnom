@@ -13,17 +13,16 @@ class Payroll extends Model
 
     protected $fillable = [
         'document',
-        'savings',
+        'savings_insurance',
         'retirement_fund',
-        'ilph',
-        'ipf',
-        'mdi',
-        'seniority_premium',
+        'ivss',
+        'ipf', // Forced unemployement insurance
+        'sfh', // Fondo de ahorro para la vivienda
+        'antiquity_premium',
         'children_premium',
         'profession_premium',
         'base_salary',
-        'total_deductions',
-        'total_allowances'
+        'payment_date'
     ];
 
     public function employee()

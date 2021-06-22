@@ -19,7 +19,7 @@ class CreateEmployeesTable extends Migration
             $table->string('name');
             $table->string('surname');
             $table->string('chargue')->nullable();
-            $table->string('division');
+            $table->string('division')->nullable();
             $table->date('admission_date');
             $table->boolean('active')->default(true);
             $table->timestamps();
