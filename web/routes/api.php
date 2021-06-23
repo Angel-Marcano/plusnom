@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PayrollController;
+use App\Http\Controllers\ManageTokenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,5 +29,5 @@ use App\Http\Controllers\PayrollController;
 // });
 Route::post('employees/import', [EmployeeController::class, 'importEmployees']);
 
-Route::post('authorize', 'AuthController@login');
-Route::post('register', 'AuthController@register');
+Route::post('authorize', [ManageTokenController::class, 'login']);
+Route::post('revoke', [ManageTokenController::class, 'revoke']);

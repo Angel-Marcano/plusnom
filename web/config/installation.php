@@ -7,5 +7,5 @@ return [
 
     'admin_password' => env('PASSWORD', 'qwerty123'),
 
-    'admin_document' => env('DOCUMENT', 'Flich'),
+    'admin_document' => env('DOCUMENT', '123456789'),
 ];
