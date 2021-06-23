@@ -5,12 +5,15 @@ import {
   List,
   Datagrid,
   TextField,
-  SimpleList
+  SimpleList,
+  BooleanInput,
+  BooleanField
 } from 'react-admin';
 import { Theme, useMediaQuery } from '@material-ui/core';
 
 const EmployeesFilter: React.FC = props => (
   <Filter {...props}>
+    <TextInput label="Cédula" source='document' />
     <TextInput label="Nombre" source='full_name' />
   </Filter>
 );
@@ -34,6 +37,8 @@ const EmployeesList: React.FC = props => {
         )
         : (
           <Datagrid>
+            <TextField source="document" label="Cédula"/>
+            <BooleanField source="active" label="Activo"/>
             <TextField source="full_name" label="Nombre completo"/>
           </Datagrid>
         )

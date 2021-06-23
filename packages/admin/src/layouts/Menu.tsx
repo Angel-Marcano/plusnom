@@ -14,6 +14,7 @@ import LabelIcon from '@material-ui/icons/Label';
 
 // Resources
 import users from '../users';
+import employees from '../employees';
 
 type MenuName = 'administration';
 
@@ -35,9 +36,9 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
             {' '}
             <DashboardMenuItem onClick={onMenuClick} sidebarIsOpen={open} />
             <MenuItemLink
-                to={users.name}
-                primaryText={users.options.label}
-                leftIcon={<users.icon />}
+                to={employees.name}
+                primaryText={employees.options.label}
+                leftIcon={<employees.icon />}
                 onClick={onMenuClick}
                 sidebarIsOpen={open}
                 dense={dense}

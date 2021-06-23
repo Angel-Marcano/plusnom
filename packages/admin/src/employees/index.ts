@@ -6,6 +6,6 @@ export default {
   icon: PeopleOutlineIcon,
   list: EmployeesList,
   options: {
-    label: 'Usuarios'
+    label: 'Empleados'
   }
 }
