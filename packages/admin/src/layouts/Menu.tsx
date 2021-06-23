@@ -34,6 +34,14 @@ const Menu: FC<MenuProps> = ({ onMenuClick, logout, dense = false }) => {
         <Box mt={1}>
             {' '}
             <DashboardMenuItem onClick={onMenuClick} sidebarIsOpen={open} />
+            <MenuItemLink
+                to={users.name}
+                primaryText={users.options.label}
+                leftIcon={<users.icon />}
+                onClick={onMenuClick}
+                sidebarIsOpen={open}
+                dense={dense}
+            />
             <SubMenu
                 handleToggle={() => handleToggle('administration')}
                 isOpen={state.administration}

@@ -5,6 +5,7 @@ import { Dashboard } from './dashboard';
 import { Layout, Login } from './layouts';
 
 import users from './users';
+import employees from './employees';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       authProvider={authProvider}
     >
       <Resource {...users} />
+      <Resource {...employees} />
     </Admin>
   );
 }
