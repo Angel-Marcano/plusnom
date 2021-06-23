@@ -65,7 +65,7 @@ const renderInput = ({
 );
 
 interface FormValues {
-    username?: string;
+    document?: string;
     password?: string;
 }
 
@@ -106,8 +106,8 @@ const Login = () => {
 
     const validate = (values: FormValues) => {
         const errors: FormValues = {};
-        if (!values.username) {
-            errors.username = translate('ra.validation.required');
+        if (!values.document) {
+            errors.document = translate('ra.validation.required');
         }
         if (!values.password) {
             errors.password = translate('ra.validation.required');
@@ -132,10 +132,10 @@ const Login = () => {
                                 <div className={classes.input}>
                                     <Field
                                         autoFocus
-                                        name="username"
+                                        name="document"
                                         // @ts-ignore
                                         component={renderInput}
-                                        label={translate('ra.auth.username')}
+                                        label={'Cédula de identidad'}
                                         disabled={loading}
                                     />
                                 </div>
@@ -144,7 +144,7 @@ const Login = () => {
                                         name="password"
                                         // @ts-ignore
                                         component={renderInput}
-                                        label={translate('ra.auth.password')}
+                                        label={'Contraseña'}
                                         type="password"
                                         disabled={loading}
                                     />

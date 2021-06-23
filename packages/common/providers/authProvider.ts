@@ -10,7 +10,7 @@ const CONFIG_NAMES = {
 const authProvider: AuthProvider = {
   login: async (data) => {
     await apiClient.get('csrf-cookie');
-    const response = await apiClient.post('login', data);
+    const response = await apiClient.post('authorize', data);
 
     if (response.status < 200 || response.status >= 300) {
       throw new Error(response.statusText);
@@ -25,7 +25,7 @@ const authProvider: AuthProvider = {
     }
   },
   logout: async () => {
-    const response = await apiClient.post('logout');
+    const response = await apiClient.post('revoke');
 
     if (response.status < 200 || response.status >= 300) {
       throw new Error(response.statusText);
@@ -37,11 +37,13 @@ const authProvider: AuthProvider = {
       return Promise.resolve();
     }
   },
-  checkError: (error) => {
+  checkError: async (error) => {
     const { response } = error;
 
     if (response.status === 401 || response.status === 403) {
-      localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
+      await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
+      await localStorage.removeItem(CONFIG_NAMES.IDENTIFICATION);
+      await localStorage.removeItem(CONFIG_NAMES.PERMISSIONS);
       return Promise.reject({ message: false });
     }
 

@@ -18,16 +18,15 @@ use App\Http\Controllers\ManageTokenController;
 |
 */
 
-// Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     // Route::middleware(['permission:Administrador'])->group(function () {
         Route::apiResource('employees', EmployeeController::class);
         Route::apiResource('payrolls', PayrollController::class);
     // });
     // Route::get('employees/{employee}/proofs/download', 'EmployeeController@downloadProof');
 
-    // Route::get('revoke', 'AuthController@logout');
-// });
+    Route::post('revoke', [ManageTokenController::class, 'revoke']);
+});
 Route::post('employees/import', [EmployeeController::class, 'importEmployees']);
 
 Route::post('authorize', [ManageTokenController::class, 'login']);
-Route::post('revoke', [ManageTokenController::class, 'revoke']);
