@@ -21,13 +21,6 @@ class Employee extends Model
         'division'
     ];
 
-    protected $appends = [ 'fullName' ];
-
-    public function getFullNameAttribute()
-    {
-        return "{$this->name} {$this->surname}";
-    }
-
     public function payrolls()
     {
         return $this->hasMany(Payroll::class, 'document', 'document');
