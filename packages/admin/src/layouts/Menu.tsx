@@ -7,7 +7,7 @@ import {
     MenuProps,
 } from 'react-admin';
 import SubMenu from './SubMenu';
-import { AppState } from '@plusnom/common/types';
+import { AppState } from '../types';
 
 // Menu icons
 import LabelIcon from '@material-ui/icons/Label';

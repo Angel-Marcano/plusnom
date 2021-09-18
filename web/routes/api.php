@@ -29,4 +29,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 Route::post('employees/import', [EmployeeController::class, 'importEmployees']);
 
-Route::post('authorize', [ManageTokenController::class, 'login']);
+Route::post('login', [ManageTokenController::class, 'login']);

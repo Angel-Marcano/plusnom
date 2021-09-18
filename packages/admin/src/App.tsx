@@ -1,26 +1,28 @@
 import { Admin, Resource } from 'react-admin';
-import { dataProvider, authProvider } from '@plusnom/common/providers';
-import { history } from '@plusnom/common/utils';
+import { authProvider, dataProvider } from './providers';
+import { history } from './utils';
 import { Dashboard } from './dashboard';
 import { Layout, Login } from './layouts';
-
+// Resources
 import users from './users';
 import employees from './employees';
 
-function App() {
-  return (
+const App = () => (
     <Admin
-      layout={Layout}
-      history={history}
-      dataProvider={dataProvider}
-      loginPage={Login}
-      dashboard={Dashboard}
-      authProvider={authProvider}
+        title=""
+        layout={Layout}
+        dashboard={Dashboard}
+        history={history}
+        loginPage={Login}
+        authProvider={authProvider}
+        dataProvider={dataProvider}
+        disableTelemetry
     >
-      <Resource {...users} />
-      <Resource {...employees} />
+        {() => [
+            <Resource {...users} />,
+            <Resource {...employees} />
+        ]}
     </Admin>
-  );
-}
+)
 
 export default App;
