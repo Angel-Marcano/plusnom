@@ -25,7 +25,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     // });
     // Route::get('employees/{employee}/proofs/download', 'EmployeeController@downloadProof');
 
-    Route::post('revoke', [ManageTokenController::class, 'revoke']);
+    Route::get('logout', [ManageTokenController::class, 'revoke']);
 });
 Route::post('employees/import', [EmployeeController::class, 'importEmployees']);
 

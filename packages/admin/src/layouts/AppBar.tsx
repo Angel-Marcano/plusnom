@@ -1,10 +1,10 @@
 import { forwardRef } from 'react';
-import { AppBar, UserMenu, MenuItemLink, useTranslate } from 'react-admin';
+import { AppBar, UserMenu, MenuItemLink } from 'react-admin';
 import Typography from '@material-ui/core/Typography';
-import SettingsIcon from '@material-ui/icons/Settings';
-import { useMediaQuery, Theme, makeStyles } from '@material-ui/core';
-
-import Logo from './Logo';
+import Box from '@material-ui/core/Box';
+import SecurityIcon from '@material-ui/icons/Security';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
     title: {
@@ -18,31 +18,33 @@ const useStyles = makeStyles({
     },
 });
 
-const ConfigurationMenu = forwardRef<any, any>((props, ref) => {
-    const translate = useTranslate();
-    return (
-        <MenuItemLink
-            ref={ref}
-            to="/configuration"
-            primaryText={translate('pos.configuration')}
-            leftIcon={<SettingsIcon />}
-            onClick={props.onClick}
-            sidebarIsOpen
-        />
-    );
-});
-
-const CustomUserMenu = (props: any) => (
+const CustomUserMenu = forwardRef<any, any>((props, ref) => (
     <UserMenu {...props}>
-        <ConfigurationMenu />
+        <Box>
+            <MenuItemLink
+                ref={ref}
+                to="/profile"
+                primaryText='Perfil'
+                title='Configuraciones de perfil'
+                leftIcon={<AccountBoxIcon />}
+                onClick={props.onClick}
+                sidebarIsOpen
+            />
+            <MenuItemLink
+                ref={ref}
+                to="/security"
+                primaryText='Seguridad'
+                title='Configuraciones de seguridad'
+                leftIcon={<SecurityIcon />}
+                onClick={props.onClick}
+                sidebarIsOpen
+            />
+        </Box>
     </UserMenu>
-);
+));
 
 const CustomAppBar = (props: any) => {
     const classes = useStyles();
-    const isXSmall = useMediaQuery((theme: Theme) =>
-        theme.breakpoints.down('xs')
-    );
 
     return (
         <AppBar {...props} elevation={1} userMenu={<CustomUserMenu />}>
@@ -52,7 +54,6 @@ const CustomAppBar = (props: any) => {
                 className={classes.title}
                 id="react-admin-title"
             />
-            {!isXSmall && <Logo />}
             <span className={classes.spacer} />
         </AppBar>
     );

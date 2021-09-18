@@ -25,6 +25,7 @@ export const authProvider: AuthProvider = {
         }
     },
     logout: async () => {
+        await apiClient.get('logout')
         await localStorage.removeItem(CONFIG_NAMES.AUTH_TOKEN);
         await localStorage.removeItem(CONFIG_NAMES.IDENTIFICATION);
         await localStorage.removeItem(CONFIG_NAMES.PERMISSIONS);
