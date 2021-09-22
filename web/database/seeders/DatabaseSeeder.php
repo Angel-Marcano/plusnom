@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\App;
 use App\Models\User;
+use App\Models\Parameter;
 
 class DatabaseSeeder extends Seeder
 {
@@ -29,5 +30,7 @@ class DatabaseSeeder extends Seeder
             }
             $this->call(TestSeeder::class);
         }
+
+        Parameter::create();
     }
 }

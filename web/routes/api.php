@@ -19,13 +19,13 @@ use App\Http\Controllers\ManageTokenController;
 */
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    // Route::middleware(['permission:Administrador'])->group(function () {
-        Route::apiResource('employees', EmployeeController::class);
-        Route::apiResource('payrolls', PayrollController::class);
-    // });
+    Route::apiResource('employees', EmployeeController::class);
+    Route::apiResource('payrolls', PayrollController::class);
     // Route::get('employees/{employee}/proofs/download', 'EmployeeController@downloadProof');
 
     Route::get('logout', [ManageTokenController::class, 'revoke']);
+    Route::apiResource('parameters', ParameterController::class)
+        ->except(['index', 'store', 'destroy']);
 });
 Route::post('employees/import', [EmployeeController::class, 'importEmployees']);
 

@@ -3,6 +3,7 @@ import { authProvider, dataProvider } from './providers';
 import { history } from './utils';
 import { Dashboard } from './dashboard';
 import { Layout, Login } from './layouts';
+import customRoutes from './routes'
 // Resources
 import users from './users';
 import employees from './employees';
@@ -16,11 +17,13 @@ const App = () => (
         loginPage={Login}
         authProvider={authProvider}
         dataProvider={dataProvider}
+        customRoutes={customRoutes}
         disableTelemetry
     >
         {() => [
             <Resource {...users} />,
-            <Resource {...employees} />
+            <Resource {...employees} />,
+            <Resource name='parameters' />
         ]}
     </Admin>
 )
