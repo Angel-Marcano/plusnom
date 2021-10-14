@@ -1,19 +1,16 @@
 import { Admin, Resource } from 'react-admin'
+import Dashboard from './dashboard'
+import Layout from './layouts'
+import Login from './layouts/Login'
 import { dataProvider, authProvider, browserHistory } from './providers'
-// import Layout from './layouts'
-// import customRoutes from './routes'
-// import Dashboard from './dashboard'
-// import users from './users'
-// import trivias from './trivias'
 
 const App = () => (
     <Admin
         dashboard={Dashboard}
-        customRoutes={customRoutes}
         history={browserHistory}
         layout={Layout}
         dataProvider={dataProvider}
-        loginPage={false}
+        loginPage={Login}
         authProvider={authProvider}
     >
         <Resource name="profile" />
