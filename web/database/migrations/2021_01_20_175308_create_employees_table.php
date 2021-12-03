@@ -25,7 +25,7 @@ class CreateEmployeesTable extends Migration
             $table->integer('cpayments')->unsigned(); //codigo de pago
             $table->integer('rank')->unsigned(); //codigo de rango
             $table->integer('class')->unsigned(); //codigo de clase
-            $table->integer('grade')->unsigned(); //codigo de grado
+            $table->string('grade')->nullable(); //codigo de grado
             $table->integer('level')->unsigned(); //codigo de nivel
             $table->integer('type_employee')->unsigned(); //codigo de pago
             $table->date('discharge_date')->nullable(); // fecha de egreso

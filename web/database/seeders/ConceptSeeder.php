@@ -5,9 +5,9 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Str;
-use App\Models\User;
+use App\Models\concept;
 
-class AdminSeeder extends Seeder
+class ConceptSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,14 +16,14 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        $admin = User::create([
-            'full_name' => config('installation.admin_full_name'),
-            'password' => bcrypt(config('installation.admin_password')),
-            'document' => config('installation.admin_document'),
-            'email' => config('installation.admin_email'),
-            'email_verified_at' => now(),
-            'remember_token' => Str::random(10),
-        ]);
-        $admin->syncRoles(Role::find(1));
+        $conceptos=['Quincena','Utilidades','Vacaciones'];
+
+        foreach ($conceptos as  $Concepto) {
+            concept::create([
+                'name'=>$Concepto
+             ]);
+        }
+        
+        
     }
 }

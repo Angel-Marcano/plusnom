@@ -15,6 +15,8 @@ class CreateCalculationDatasTable extends Migration
     {
         Schema::create('calculation_datas', function (Blueprint $table) {
             $table->id();
+            $table->string('type_data');
+            $table->json('data');
             $table->timestamps();
         });
     }
