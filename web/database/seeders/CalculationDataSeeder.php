@@ -169,14 +169,9 @@ class CalculationDataSeeder extends Seeder
                 'Doctor'      =>60
         ];
 
-        // continuara ..
         $Data_Standard_bonus=[
-            'Alimentacion'   =>0,
-            'Navidad'        =>20,
-            'Profesional' =>30,
-            'Especialista'=>40,
-            'Maestria'    =>50,
-            'Doctor'      =>60
+            'feeding' =>3,
+            'Standard'     =>1.75,
         ];
 
         
@@ -204,12 +199,12 @@ class CalculationDataSeeder extends Seeder
             'type_data' => 'Profession',
             'data' => json_encode($Data_profession),
         ]);
-/*
+
         calculation_data::create([
             'type_data' => 'Standard_bonus',
-            'data' => json_encode(),
+            'data' => json_encode($Data_Standard_bonus),
         ]);
-*/
+
 /*
         calculation_data::create([
             'type_data' => 'Empleado',

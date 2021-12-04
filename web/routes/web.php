@@ -18,23 +18,23 @@ Route::get('/', function () {
     
     
 
-    /*$a=calculation_data::find(1);
+    $a=calculation_data::find(1);
 
     $B=json_decode($a->data);
     $Grade='BII';
-    $Level='7'*/
+    $Level='7';
     $anos=5;
 
-    return $Data_managers;
+    return $B->$Grade->$Level;
 
 });
 
 
 Route::get('Empleados_data/{Grade}/{Level}', function ($Grade,$Level) {
 
-    $a=calculation_data::find(1);
+    /*$a=calculation_data::find(1);
     $B=json_decode($a->data);
     
-    return $B->$Grade->$Level;
+    return $B->$Grade->$Level;*/
 
 });
