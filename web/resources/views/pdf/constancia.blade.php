@@ -93,8 +93,7 @@
         <div>
             <div>
                 <h1> CONSTANCIA </h1>
-                <p>
-                    <align="justify">
+                <p style="text-align:justify;">
                     La Suscrita Directora de Recursos Humanos de la Alcaldia del Municipio Bermúdez,
                     por medio de la presente hace constar, que el (la) ciudadano (a): {{ucwords($Employee->full_name)}} ,
                     titular de la Cédula de Identidad Nº {{number_format($Employee->document,0,',','.')}} ,
@@ -117,7 +116,7 @@
                     
                 </p>
                 
-                <p style="margin-top:50px;">
+                <p style="margin-top:50px;text-align:justify;">
                     Constancia que se expide a solicitud de la parte interesada en la
                     ciudad de Carúpano, a los {{date('d')}} días del mes del
                     
@@ -129,11 +128,8 @@
 
 
             <div>
-                <p style="text-align:center; font-size:15px; margin-bottom:20px;">
+                <p style="text-align:center; font-size:18px; margin-bottom:50px;">
                     Atentamente
-                </p>
-                <p style="text-align:center;">
-                    <img style="margin-left:0%;" src="data:image/png;base64, {{ base64_encode(QrCode::size(200)->generate('Mediante la presente yo, gilmelis vargas directora de recursos humano de la alcaldia del municipio bermudez valido los siguentes datos:'.$Employee->full_name.', ingreso:'.$Employee->admission_date.', Asignación mensual:'.$datos['Total'].', Cuenta con '.$Employee->number_children.' hijo(s) menores registrados, sus datos de calculo son: sueldo base:'.$datos['base'].', Prima por hijos:'.$datos['children_premium'].', prima por antiguadad:'.$datos['antiquity_premium'].', prima por profesion:'.$datos['profession_premium'].'. Documento se expide a fecha:'.date('d-m-Y'))) }} ">     
                 </p>
                 <p style="text-align:center; margin:0;">
                     Lcda. Gilmelis vargas
@@ -141,8 +137,12 @@
                 <p style="text-align:center; margin:0;">
                     DIRECTORA DE RECURSOS HUMANOS
                 </p>
-                <p style="text-align:center; margin:0;">
+                <p style="text-align:center; margin:0; margin-bottom:150px;">
                     BAJO RESOLUCION Nº07, GACETA Nº06-A FECHA: 01/12/2021
+                </p>
+
+                <p style="text-align:center;">
+                    <img style="margin-left:0%;" src="data:image/png;base64, {{ base64_encode(QrCode::size(200)->generate('Mediante la presente yo, gilmelis vargas directora de recursos humano de la alcaldia del municipio bermudez valido los siguentes datos:'.$Employee->full_name.', ingreso:'.$Employee->admission_date.', Asignación mensual:'.$datos['Total'].', Cuenta con '.$Employee->number_children.' hijo(s) menores registrados, sus datos de calculo son: sueldo base:'.$datos['base'].', Prima por hijos:'.$datos['children_premium'].', prima por antiguadad:'.$datos['antiquity_premium'].', prima por profesion:'.$datos['profession_premium'].'. Documento se expide a fecha:'.date('d-m-Y'))) }} ">     
                 </p>
             </div>
           

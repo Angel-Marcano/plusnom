@@ -12,7 +12,7 @@ class paysheet extends Model
 
     public function Employye()
     {
-        return $this->hasMany(Payroll::class, 'id', 'cpaysheet');
+        return $this->hasMany(Employee::class, 'cpaysheet', 'id');
     }
 
     

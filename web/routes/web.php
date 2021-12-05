@@ -41,11 +41,8 @@ return view('Welcome');
 
 Route::get('Constancia', [EmployeeController::class, 'constancia'])->name('Constancia');
 
-Route::get('pdf', [EmployeeController::class, 'downloadProof'])->name('Co');
+Route::get('Nomina', [EmployeeController::class, 'index'])->name('Co');
 
-Route::get('qr', [EmployeeController::class, 'qr'])->name('qr');
-
-    
 
 
 
