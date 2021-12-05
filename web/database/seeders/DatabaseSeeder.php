@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesAndPermissionsSeeder::class);
         $this->call(ConceptSeeder::class);
         $this->call(CalculationDataSeeder::class);
+        $this->call(PaysheetsSeeder::class);
 
         if (!$inProd) {
             // Create more users

@@ -18,6 +18,7 @@ use App\Http\Controllers\ManageTokenController;
 |
 */
 
+/*
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('employees', EmployeeController::class);
     Route::apiResource('payrolls', PayrollController::class);
@@ -30,3 +31,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::post('employees/import', [EmployeeController::class, 'importEmployees']);
 
 Route::post('login', [ManageTokenController::class, 'login']);
+
+*/

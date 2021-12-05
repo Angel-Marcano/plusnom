@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\calculation_data;
+use App\Models\Employee;
+use App\Http\Controllers\EmployeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +20,11 @@ Route::get('/', function () {
     
     
 
-    $a=calculation_data::find(1);
+   /* $a=calculation_data::find(1);
+    $empleado=Employee::find(1);
+
+    //dd($empleado);
+
 
     $B=json_decode($a->data);
     $Grade='BII';
@@ -26,8 +32,21 @@ Route::get('/', function () {
     $anos=5;
 
     return $B->$Grade->$Level;
+*/
+
+return view('Welcome');
+    
 
 });
+
+Route::get('Constancia', [EmployeeController::class, 'constancia'])->name('Constancia');
+
+Route::get('pdf', [EmployeeController::class, 'downloadProof'])->name('Co');
+
+Route::get('qr', [EmployeeController::class, 'qr'])->name('qr');
+
+    
+
 
 
 Route::get('Empleados_data/{Grade}/{Level}', function ($Grade,$Level) {

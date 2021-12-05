@@ -99,7 +99,7 @@ class CalculationDataSeeder extends Seeder
             ];
 
         $Data_obreros=[
-                'Minimo'=>[
+                'MINIMO'=>[
                         '1' =>7.00,
                         '2' =>7.74,
                         '3' =>8.49,
@@ -112,7 +112,7 @@ class CalculationDataSeeder extends Seeder
                         '10'=>13.68,
                     ],
                 
-                'Maximo'=>[
+                'MAXIMO'=>[
                         '1' =>7.18,
                         '2' =>7.92,
                         '3' =>8.67,
@@ -161,12 +161,12 @@ class CalculationDataSeeder extends Seeder
         ];
 
         $Data_profession=[
-                'Bachiller'   =>0,
+                'BACHILLER'   =>0,
                 'TSU'         =>20,
-                'Profesional' =>30,
-                'Especialista'=>40,
-                'Maestria'    =>50,
-                'Doctor'      =>60
+                'PROFESIONAL' =>30,
+                'ESPECIALISTA'=>40,
+                'MAESTRIA'    =>50,
+                'DOCTOR'      =>60
         ];
 
         $Data_Standard_bonus=[

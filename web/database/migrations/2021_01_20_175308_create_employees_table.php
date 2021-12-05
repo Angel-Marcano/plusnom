@@ -18,13 +18,14 @@ class CreateEmployeesTable extends Migration
             $table->string('document'); //cedula
             $table->string('full_name'); //nombre completo
             $table->string('chargue')->nullable(); // cargo
-            $table->string('division')->nullable(); // divicion
+            $table->string('division')->nullable(); // division
             $table->date('admission_date')->nullable(); // fecha de ingreso
+            $table->date('level_profession')->nullable(); // nivel profesional
             $table->boolean('active')->default(true); // estado del trabajador
             $table->integer('cpaysheet')->unsigned(); //codigo nomina
             $table->integer('cpayments')->unsigned(); //codigo de pago
             $table->integer('rank')->unsigned(); //codigo de rango
-            $table->integer('class')->unsigned(); //codigo de clase
+            $table->string('class')->nullable(); //codigo de clase
             $table->string('grade')->nullable(); //codigo de grado
             $table->integer('level')->unsigned(); //codigo de nivel
             $table->integer('type_employee')->unsigned(); //codigo de pago
