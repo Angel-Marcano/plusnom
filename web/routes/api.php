@@ -33,3 +33,5 @@ Route::post('employees/import', [EmployeeController::class, 'importEmployees']);
 Route::post('login', [ManageTokenController::class, 'login']);
 
 */
+
+Route::get('Constancia_api/{cedula}', [EmployeeController::class, 'constancia'])->name('Constancia_api');
