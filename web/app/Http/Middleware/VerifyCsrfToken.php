@@ -19,7 +19,7 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        'api/Constancia_api'
+        'api/Constancia_api','save_employee'
         //
     ];
 }

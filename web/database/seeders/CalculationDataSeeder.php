@@ -126,6 +126,7 @@ class CalculationDataSeeder extends Seeder
                     ],
                 ];
         $Data_antiquity=[
+                    '0' =>0,
                     '1' =>2,
                     '2' =>4,
                     '3' =>6,

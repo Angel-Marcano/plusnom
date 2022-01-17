@@ -24,13 +24,16 @@ class CreateEmployeesTable extends Migration
             $table->boolean('active')->default(true); // estado del trabajador
             $table->integer('cpaysheet')->unsigned(); //codigo nomina
             $table->integer('cpayments')->unsigned(); //codigo de pago
-            $table->integer('rank')->unsigned(); //codigo de rango
-            $table->string('class')->nullable(); //codigo de clase
-            $table->string('grade')->nullable(); //codigo de grado
-            $table->integer('level')->unsigned(); //codigo de nivel
+            $table->integer('rank')->nullable(); //codigo de rango - obreros
+            $table->string('class')->nullable(); //codigo de clase - obreros
+            $table->string('grade')->nullable(); //codigo de grado - empleados
+            $table->integer('level')->nullable(); //codigo de nivel - empleados
             $table->integer('type_employee')->unsigned(); //codigo de pago
             $table->date('discharge_date')->nullable(); // fecha de egreso
             $table->integer('number_children')->nullable(); // numero de hijos
+            $table->string('bank_account')->nullable(); // cuenta bancaria
+            $table->string('account_type')->nullable(); // tipo de cuenta
+            
 
 
             /*

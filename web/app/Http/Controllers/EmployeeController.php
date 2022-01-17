@@ -52,7 +52,31 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /* colo car validadciones */ 
+
+        $Employee = new Employee;
+
+
+        $Employee->document=$request->document;                 // cedula
+        $Employee->full_name=$request->full_name;               // nombre completo
+        $Employee->chargue=$request->chargue;                   // cargo
+        $Employee->division=$request->division;                 // division
+        $Employee->admission_date=$request->admission_date;     // fecha de ingreso
+        $Employee->level_profession=$request->level_profession; // nivel profesional
+        $Employee->cpaysheet=$request->cpaysheet;               // codigo nomina
+        $Employee->cpayments=$request->cpayments;               // codigo de pago
+        $Employee->rank=$request->rank;                         // codigo de rango
+        $Employee->class=$request->class;                       // codigo de clase
+        $Employee->grade=$request->grade;                       // codigo de grado
+        $Employee->level=$request->level;                       // codigo de nivel
+        $Employee->type_employee=$request->type_employee;       // codigo de pago
+        $Employee->number_children=$request->number_children;   // numero de hijos
+        $Employee->bank_account=$request->bank_account;         // cuenta bancaria
+        $Employee->account_type=$request->account_type;         // tipo de cuenta
+
+        $Employee->save();
+
+        return $Employee;
     }
 
     /**
@@ -174,7 +198,7 @@ class EmployeeController extends Controller
 
         return view('welcome');
       
-        //return  {!! QrCode::size(250)->generate('www.google.com') !!};
+        //return  {!! QrCode::size(250)->generatewww.google.com !!};
          
     }
 

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\calculation_data;
 use App\Models\Employee;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PayrollController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,21 +19,6 @@ use App\Http\Controllers\EmployeeController;
 
 Route::get('/', function () {
     
-    
-
-   /* $a=calculation_data::find(1);
-    $empleado=Employee::find(1);
-
-    //dd($empleado);
-
-
-    $B=json_decode($a->data);
-    $Grade='BII';
-    $Level='7';
-    $anos=5;
-
-    return $B->$Grade->$Level;
-*/
 
 return view('Welcome');
     
@@ -42,6 +28,9 @@ return view('Welcome');
 Route::get('Constancia', [EmployeeController::class, 'constancia'])->name('Constancia');
 
 Route::get('Nomina', [EmployeeController::class, 'index'])->name('Co');
+Route::get('txt', [PayrollController::class, 'txt'])->name('TXT');
+
+Route::post('save_employee', [EmployeeController::class, 'store'])->name('save_employee');
 
 
 
