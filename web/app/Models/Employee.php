@@ -17,9 +17,20 @@ class Employee extends Model
     protected $fillable = [
         'document',
         'full_name',
-        'admission_date',
         'chargue',
-        'division'
+        'division',
+        'admission_date',
+        'level_profession',
+        'cpaysheet',
+        'cpayments',
+        'rank',
+        'class',
+        'grade',
+        'level',
+        'type_employee',
+        'number_children',
+        'bank_account',
+        'account_type',
     ];
 
     public function payrolls()

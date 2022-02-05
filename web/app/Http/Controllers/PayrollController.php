@@ -97,6 +97,47 @@ class PayrollController extends Controller
         //
     }
 
+    public function configuracion_antiguedad(){
+        $resp=json_decode(calculation_data::find(3)->data);
+
+       $array=array();
+       for($i=0; $i<24;$i++){
+            array_push($array,$resp->$i);
+       }
+       
+      
+        return json_encode($array);
+    }
+
+    public function configuracion_profesion(){
+        $resp=json_decode(calculation_data::find(5)->data);
+       
+        return $resp;
+    }
+    
+    public function configuracion_bone(){
+        $resp=json_decode(calculation_data::find(6)->data);
+       
+        return $resp;
+    }
+
+    public function configuracion_bone_set(Request $request){
+        $set=calculation_data::find(6);
+    //return ($request->items);
+
+       $set->data=$request->items;
+       $set->save();
+       return response()->json(['mensaje'=>'exito']);
+    }
+
+    public function configuracion_profesion_set(Request $request){
+        $set=calculation_data::find(5);
+        $set->data=$request->items;
+        $set->save();
+        return response()->json(['mensaje'=>'exito']);
+    }
+    
+
     public function salary_calculator($Employee){
 
         $Bonus_Standard=json_decode(calculation_data::find(6)->data);

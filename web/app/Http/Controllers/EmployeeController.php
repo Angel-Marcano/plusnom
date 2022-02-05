@@ -186,11 +186,13 @@ class EmployeeController extends Controller
             abort(403);
         }
         
+        
+    }
 
-      
-      
-        
-        
+    public function Carnet(){
+        $pdf = PDF::loadView('pdf.carnet');
+
+        return $pdf->stream('carnet.pdf');
     }
 
 

@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import Saludo from './componentes/Saludo';
+import Configuracion from './componentes/view/Configuracion';
+import Home from './componentes/view/Home';
+import Constancia from './componentes/view/Contancia';
+import Container from 'react-bootstrap/Container';
+import Navegador from './componentes/Nav';
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Navegador></Navegador>
+      <Container fluid>
+        
+               
+        
+          <Routes>
+            <Route exact path="/Saludo" element={<Saludo/>}/>
+            <Route exact path="/Configuracion" element={<Configuracion/>}/>
+            <Route exact path="/Home" element={<Home/>}/>
+            <Route exact path="/Constancia" element={<Constancia/>}/>
+            
+          </Routes>
+            
+
+      </Container>
+    </BrowserRouter>
   );
 }
 
