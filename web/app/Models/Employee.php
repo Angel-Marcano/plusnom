@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Payroll;
+use App\Models\paysheet;
 
 class Employee extends Model
 {
@@ -16,14 +17,30 @@ class Employee extends Model
     protected $fillable = [
         'document',
         'full_name',
-        'admission_date',
         'chargue',
-        'division'
+        'division',
+        'admission_date',
+        'level_profession',
+        'cpaysheet',
+        'cpayments',
+        'rank',
+        'class',
+        'grade',
+        'level',
+        'type_employee',
+        'number_children',
+        'bank_account',
+        'account_type',
     ];
 
     public function payrolls()
     {
         return $this->hasMany(Payroll::class, 'document', 'document');
+    }
+
+    public function paysheet()
+    {
+        return $this->belongsTo(paysheet::class, 'cpaysheet', 'id');
     }
 
     public function profile()

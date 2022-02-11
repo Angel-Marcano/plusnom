@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\calculation_data;
+use App\Models\Employee;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PayrollController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +18,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    
+return view('Welcome');
+    
+});
+Route::get('Constancia', [EmployeeController::class, 'constancia'])->name('Constancia');
+Route::get('Carnet', [EmployeeController::class, 'Carnet'])->name('Carnet');
+Route::get('Nomina', [EmployeeController::class, 'index'])->name('Co');
+Route::get('txt', [PayrollController::class, 'txt'])->name('TXT');
+Route::post('save_employee', [EmployeeController::class, 'store'])->name('save_employee');
+Route::get('Empleados_data/{Grade}/{Level}', function ($Grade,$Level) {
+
+    /*$a=calculation_data::find(1);
+    $B=json_decode($a->data);
+    return $B->$Grade->$Level;*/
+
 });
