@@ -20,7 +20,7 @@ class CreateEmployeesTable extends Migration
             $table->string('chargue')->nullable(); // cargo
             $table->string('division')->nullable(); // division
             $table->date('admission_date')->nullable(); // fecha de ingreso
-            $table->date('level_profession')->nullable(); // nivel profesional
+            $table->string('level_profession')->nullable(); // nivel profesional
             $table->boolean('active')->default(true); // estado del trabajador
             $table->integer('cpaysheet')->unsigned(); //codigo nomina
             $table->integer('cpayments')->unsigned(); //codigo de pago

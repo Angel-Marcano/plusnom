@@ -12,12 +12,13 @@ const Navegador=()=>{
   return(  
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
     <Container>
-    <Navbar.Brand href="#home">Plusnom Alpa 1.0</Navbar.Brand>
+    <Navbar.Brand href="#home">Plusnom Alfa 1.1.0</Navbar.Brand>
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <Navbar.Collapse id="responsive-navbar-nav">
       <Nav className="me-auto">
         <Nav.Link href="Constancia">Constancia</Nav.Link>
-        <NavLink href="Home" >home</NavLink>
+        <Nav.Link href="Nomina">Nomina</Nav.Link>
+        <Nav.Link href="Home" >home</Nav.Link>
         <Nav.Link href="Configuracion">Configuracion</Nav.Link>
        
         

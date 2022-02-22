@@ -23,8 +23,8 @@ class Employee extends Model
         'level_profession',
         'cpaysheet',
         'cpayments',
-        'rank',
-        'class',
+        'rank',  //numerico obreros
+        'class',  // 'MAXIMO'  Y 'MINIMO'
         'grade',
         'level',
         'type_employee',

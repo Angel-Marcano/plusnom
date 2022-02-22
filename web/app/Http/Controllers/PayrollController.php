@@ -102,10 +102,10 @@ class PayrollController extends Controller
 
        $array=array();
        for($i=0; $i<24;$i++){
-            array_push($array,$resp->$i);
+            array_push($array,$resp[$i]);
        }
        
-      
+       
         return json_encode($array);
     }
 
@@ -146,22 +146,26 @@ class PayrollController extends Controller
 
         $date1=date_create($Employee->admission_date);
         $date2=date_create(date('Y-m-d'));
-        $Employee_Antiquity=date_diff($date1,$date2)->y;
+        $Employee_Antiquity=23;//date_diff($date1,$date2)->y;
         $Employee_profesional=$Employee->level_profession;
 
         if( in_array($Employee->paysheet->id,[3,4])){
             $calculation_data=calculation_data::find(1);
                     
             $data=json_decode($calculation_data->data);
+
+            
+
             $Grade=$Employee->grade;
             $Level=$Employee->level;
+            
 
             $datos=[
                 'base'=> $data->$Grade->$Level,
                 'children_premium'=> $Employee->number_children*$Bonus_Standard->Standard,
-                'antiquity_premium'=> number_format($data->$Grade->$Level*($Antiquity->$Employee_Antiquity/100),3,',','.'),
+                'antiquity_premium'=> number_format($data->$Grade->$Level*($Antiquity[$Employee_Antiquity]/100),3,',','.'),
                 'profession_premium'=> number_format($data->$Grade->$Level*($profession->$Employee_profesional/100),3,',','.'),
-                'Total'=> number_format(($data->$Grade->$Level)+($Employee->number_children*$Bonus_Standard->Standard)+($data->$Grade->$Level*($Antiquity->$Employee_Antiquity/100))+($data->$Grade->$Level*($profession->$Employee_profesional/100)),2,',','.'),
+               'Total'=> number_format(($data->$Grade->$Level)+($Employee->number_children*$Bonus_Standard->Standard)+($data->$Grade->$Level*($Antiquity[$Employee_Antiquity]/100))+($data->$Grade->$Level*($profession->$Employee_profesional/100)),2,',','.'),
             ];
             
 
@@ -190,6 +194,8 @@ class PayrollController extends Controller
        
         foreach ($query->Employye as $Employee) {
             $salary=$this->salary_calculator($Employee);
+
+           
             $Employee->mount=$salary;
             $salary['Total']=str_replace(",", ".", $salary['Total']);
             
@@ -211,7 +217,7 @@ class PayrollController extends Controller
         $nombre_institucion="H"."ALCALDIA BERMUDEZ                       ";//ojo con la cantidad de espacios
         $cuenta_empresa="01020438225578891433";
         $n_archivo="03";
-        $fecha="15/01/22";
+        $fecha="22/02/22";
         $monto_total=$Total_txt;
         
         $codigo="03291 ";
@@ -224,7 +230,7 @@ class PayrollController extends Controller
             /* calculo para el monto con relleno*/ 
             $mount_employee=str_replace(",",'',$Employee->mount['Total']);
             $relleno='';
-            $relleno_mount=11-strlen($mount_employee);
+            $relleno_mount=11-mb_strlen($mount_employee);
             for ($i=0; $i < $relleno_mount; $i++) { 
                 $relleno=$relleno.'0';
             }
@@ -233,7 +239,9 @@ class PayrollController extends Controller
             /*nombre con relleno*/ 
             $name_employee=$Employee->full_name;
             $relleno='';
-            $relleno_name=40-strlen($name_employee);
+
+           // dd(mb_strlen('Cleobaldo Cedeño'));
+            $relleno_name=40-mb_strlen($name_employee);
             for ($i=0; $i < $relleno_name; $i++) { 
                 $relleno=$relleno.' ';
             }
@@ -242,7 +250,7 @@ class PayrollController extends Controller
             /*Cedula con relleno*/ 
             $document_employee=$Employee->document;
             $relleno='';
-            $relleno_document=9-strlen($document_employee);
+            $relleno_document=9-mb_strlen($document_employee);
             for ($i=0; $i < $relleno_document; $i++) { 
                 $relleno=$relleno.'0';
             }
