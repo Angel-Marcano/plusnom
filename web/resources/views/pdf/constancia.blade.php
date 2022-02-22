@@ -119,8 +119,12 @@
                 <p style="margin-top:50px;text-align:justify;">
                     Constancia que se expide a solicitud de la parte interesada en la
                     ciudad de Carúpano, a los {{date('d')}} días del mes del
-                    
-                    {{$datos["Meses"][date('m')]}} de {{date('Y')}}.
+                    @php
+                        $mes=date('m');
+                        $mes=number_format($mes,0);
+                    @endphp
+                   
+                    {{$datos["Meses"][$mes]}} de {{date('Y')}}.
                 </p>
                 <br>
                 

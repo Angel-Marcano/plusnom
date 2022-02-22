@@ -19,11 +19,15 @@ class EmployeeController extends Controller
     public function index(Request $request)
     {
         $results = $request->perPage;
-        $query = Employee::withCount('payrolls');
+        $query = Employee::withCount('payrolls')
+        ->with('paysheet')->where('cpaysheet',4);
 
         if ($request->has('filter')) {
             $filters = $request->filter;
             // Get fields
+           /* if (array_key_exists('paysheet', $filters)) {
+                $query->whereLike('cpaysheet', $filters['paysheet']);
+            }*/
             if (array_key_exists('document', $filters)) {
                 $query->whereLike('document', $filters['document']);
             }
@@ -41,7 +45,33 @@ class EmployeeController extends Controller
             }
         }
 
-        return $query->paginate($results);
+         $trabajadores=$query->paginate($results);
+         
+
+         $response=$trabajadores->getCollection()->transform(function ($trabajador) {
+            
+ 
+           // $trabajador->datos_pago =data_for_calculation_salary();
+            return $trabajador;
+        });
+
+       // return $response;
+
+    
+        return response()->json([
+            "data" => $response,
+            "pagination" => (object)[
+                "currentPage" => $trabajadores->currentPage(),
+                "lastPage" => $trabajadores->lastPage(),
+                "perPage" => $trabajadores->perPage(),
+                "total" => $trabajadores->total()
+            ]
+        ]);
+
+    }
+
+    public function data_calculation_salary(){
+        return data_for_calculation_salary();
     }
 
     /**
@@ -116,21 +146,45 @@ class EmployeeController extends Controller
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Employee $employee)
+    public function update(Request $request)
     {
-        //
+        $Employee=$request->Trabajador;
+       // var_dump($Employee['document']);
+        $E=Employee::where('document',$Employee['document'])->first();
+        //var_dump($E);
+
+        $E->document=$Employee['document'];                 // cedula
+        $E->full_name=$Employee['full_name'];               // nombre completo
+        $E->chargue=$Employee['chargue'];                   // cargo
+        $E->division=$Employee['division'];                 // division
+        $E->admission_date=$Employee['admission_date'];     // fecha de ingreso
+        $E->level_profession=$Employee['level_profession']; // nivel profesional
+        $E->cpaysheet=$Employee['cpaysheet'];               // codigo nomina
+        $E->cpayments=$Employee['cpayments'];               // codigo de pago
+        $E->rank=$Employee['rank'];                         // codigo de rango
+        $E->class=$Employee['class'];                       // codigo de clase
+        $E->grade=$Employee['grade'];                       // codigo de grado
+        $E->level=$Employee['level'];                       // codigo de nivel
+        $E->type_employee=$Employee['type_employee'];       // codigo de pago
+        $E->number_children=$Employee['number_children'];   // numero de hijos
+        $E->bank_account=$Employee['bank_account'];         // cuenta bancaria
+        $E->account_type=$Employee['account_type'];         // tipo de cuenta
+
+        $E->save();
+
+       // retornar la data para la vista .... recargar? o que ? ....
+        return json_encode('{resultado:exitoso}',true);
+
+        
     }
 
     public function constancia(Request $request){
-
-        
-        
+     
         $Employee=Employee::with([
             'paysheet',
         ])->Where('document','=',$request->cedula)->first();
 
-        
-        if(!is_null($Employee)){
+    
                 $Bonus_Standard=json_decode(calculation_data::find(6)->data);
                 $Antiquity=json_decode(calculation_data::find(3)->data);
                 $profession=json_decode(calculation_data::find(5)->data);
@@ -145,14 +199,16 @@ class EmployeeController extends Controller
                             
                     $data=json_decode($calculation_data->data);
                     $Grade=$Employee->grade;
-                    $Level=$Employee->level;
+                    $Level=$Employee->level; 
 
+                   // return var_dump($data->$Grade->$Level);
+                    
                     $datos=[
                         'base'=> $data->$Grade->$Level,
                         'children_premium'=> $Employee->number_children*$Bonus_Standard->Standard,
-                        'antiquity_premium'=> number_format($data->$Grade->$Level*($Antiquity->$Employee_Antiquity/100),3,',','.'),
+                        'antiquity_premium'=> number_format($data->$Grade->$Level*($Antiquity[$Employee_Antiquity]/100),3,',','.'),
                         'profession_premium'=> number_format($data->$Grade->$Level*($profession->$Employee_profesional/100),3,',','.'),
-                        'Total'=> number_format(($data->$Grade->$Level)+($Employee->number_children*$Bonus_Standard->Standard)+($data->$Grade->$Level*($Antiquity->$Employee_Antiquity/100))+($data->$Grade->$Level*($profession->$Employee_profesional/100)),2,',','.'),
+                        'Total'=> number_format(($data->$Grade->$Level)+($Employee->number_children*$Bonus_Standard->Standard)+($data->$Grade->$Level*($Antiquity[$Employee_Antiquity]/100))+($data->$Grade->$Level*($profession->$Employee_profesional/100)),2,',','.'),
                         'feeding'=>$Bonus_Standard->feeding,
                         'Meses'=>['nulo jeje','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
                     ];
@@ -177,33 +233,24 @@ class EmployeeController extends Controller
                     ];
                 }
 
-                // return $datos;
+               
                 $pdf = PDF::loadView('pdf.constancia',compact('datos','Employee'));
 
-                return $pdf->stream('constancia.pdf');
+                return $pdf->download('constancia.pdf');
 
-        }else{
-            abort(403);
-        }
+       
         
         
     }
 
-    public function Carnet(){
-        $pdf = PDF::loadView('pdf.carnet');
+    public function Carnet(Request $request){
 
-        return $pdf->stream('carnet.pdf');
+        $Trabajador=$request->Trabajador;
+
+        $pdf = PDF::loadView('pdf.carnet',compact('Trabajador'));
+
+        return $pdf->download('carnet.pdf');
     }
-
-
-    public function qr(){
-
-        return view('welcome');
-      
-        //return  {!! QrCode::size(250)->generatewww.google.com !!};
-         
-    }
-
 
 
 }

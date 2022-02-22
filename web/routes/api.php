@@ -34,7 +34,8 @@ Route::post('login', [ManageTokenController::class, 'login']);
 
 */
 
-Route::get('Constancia_api/{cedula}', [EmployeeController::class, 'constancia'])->name('Constancia_api');
+Route::post('employees/import', [EmployeeController::class, 'importEmployees']);
+Route::post('Constancia_api', [EmployeeController::class, 'constancia'])->name('Constancia_api');
 
 Route::get('configuracion_antiguedad', [PayrollController::class, 'configuracion_antiguedad'])->name('configuracion_antiguedad');
 Route::get('configuracion_profesion', [PayrollController::class, 'configuracion_profesion'])->name('configuracion_profesion');
@@ -42,5 +43,12 @@ Route::get('configuracion_bone', [PayrollController::class, 'configuracion_bone'
 Route::post('configuracion_bone/set', [PayrollController::class, 'configuracion_bone_set'])->name('configuracion_bone_set');
 Route::post('configuracion_profesion/set', [PayrollController::class, 'configuracion_profesion_set'])->name('configuracion_profesion_set');
 Route::post('employees/import', [EmployeeController::class, 'importEmployees']);
+Route::post('employees/update', [EmployeeController::class, 'update']);
+Route::post('Carnet', [EmployeeController::class, 'Carnet']);
+Route::post('txt', [PayrollController::class, 'txt']);
+
+Route::get('Nomina', [EmployeeController::class, 'index']);
+
+Route::get('data_calculation', [EmployeeController::class, 'data_calculation_salary']);
 
 //Route::post('configuracion_bone/set', [PayrollController::class, 'configuracion_bone_set'])->name('configuracion_bone_set');
