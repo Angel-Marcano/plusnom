@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\NominaExcel;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Payroll;
+use App\Models\Employee;
 use App\Models\paysheet;
 use Illuminate\Http\Request;
 use App\Models\calculation_data;
 use PhpOffice\PhpSpreadsheet\Calculation\TextData\Format;
+
 
 class PayrollController extends Controller
 {
@@ -135,6 +139,19 @@ class PayrollController extends Controller
         $set->data=$request->items;
         $set->save();
         return response()->json(['mensaje'=>'exito']);
+    }
+
+    public function NominaExcel_download(){
+       
+       $query = Employee::withCount('payrolls')
+       ->with('paysheet')->where('cpaysheet',4)->get();
+
+       
+        $data=collect($query);
+
+        //dd($data[0]);
+        return Excel::download(new NominaExcel($data), 'DetallesOdsExcel.xlsx');
+    
     }
     
 

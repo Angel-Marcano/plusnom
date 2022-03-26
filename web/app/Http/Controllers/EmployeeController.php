@@ -20,16 +20,21 @@ class EmployeeController extends Controller
     {
         $results = $request->perPage;
         $query = Employee::withCount('payrolls')
-        ->with('paysheet')->where('cpaysheet',4);
+        ->with('paysheet')->where('cpaysheet',$request->filter['nomina']);
 
         if ($request->has('filter')) {
             $filters = $request->filter;
             // Get fields
-           /* if (array_key_exists('paysheet', $filters)) {
-                $query->whereLike('cpaysheet', $filters['paysheet']);
-            }*/
-            if (array_key_exists('document', $filters)) {
-                $query->whereLike('document', $filters['document']);
+            if ( array_key_exists('txt_busqueda', $filters) && $filters['txt_busqueda']!='') {
+                $query->where('document','LIKE',$filters['txt_busqueda'].'%');
+            }//number_children
+            if ( array_key_exists('hijos', $filters) && $filters['hijos']!='') {
+                if($filters['hijos']=='0'){
+                    $query->where('number_children',0);
+                }else{
+                    $query->where('number_children','>',0);
+                }
+                
             }
             if (array_key_exists('name', $filters)) {
                 $query->whereLike('name', $filters['name']);

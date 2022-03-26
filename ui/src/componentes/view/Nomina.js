@@ -1,5 +1,5 @@
 import React,{ useEffect, useState } from "react";
-import {Table,Button,Modal,Tabs,Tab,Pagination,Alert } from "react-bootstrap";
+import {Table,Button,Modal,Tabs,Tab,Pagination,Alert,FormControl,InputGroup,Form } from "react-bootstrap";
 import Tabla_data_payment from "../componentes_view/Tabla_data_payment";
 import Tabla_data_payment_config from "../componentes_view/Tabla_data_payment_config";
 import useFetch from "../custom_hooks/useFetch";
@@ -17,30 +17,37 @@ const {Provider,Consumer}=React.createContext();
 
 
 const Paginacion=(props)=>{
-  var Current=4;
-  var Last=9;
-  var path='http://127.0.0.1:8000/api/Nomina';
+  //var Current=4;
+  //var Last=9;
+  //var path='http://127.0.0.1:8000/api/Nomina';
 
-  const {pag} =props
+  const {pag,handle} =props
   const {currentPage,lastPage,perPage,total}=pag;
+
+  const setUrl=(num)=>{
+    handle(num);
+  };
 
 
   return(
     <Pagination>
       {console.log(pag)}
            
-         <Pagination.First />
-         <Pagination.Prev />
+         <Pagination.First onClick={()=>{setUrl(1)}} />
+         <Pagination.Prev onClick={()=>{setUrl(currentPage-1)}} />
 
-         {(currentPage>1)?<Pagination.Item >{currentPage-1}</Pagination.Item>:''}
+         {(currentPage-3>=1)?<Pagination.Item onClick={()=>{setUrl(currentPage-3)}} >{currentPage-3}</Pagination.Item>:''}
+         {(currentPage-2>=1)?<Pagination.Item onClick={()=>{setUrl(currentPage-2)}} >{currentPage-2}</Pagination.Item>:''}
+         {(currentPage-1>=1)?<Pagination.Item onClick={()=>{setUrl(currentPage-1)}} >{currentPage-1}</Pagination.Item>:''}
 
          {<Pagination.Item active>{currentPage}</Pagination.Item>}
 
-         {(currentPage<lastPage)?<Pagination.Item >{currentPage+1}</Pagination.Item>:''}
+         {((currentPage+1)<=lastPage)?<Pagination.Item onClick={()=>{setUrl(currentPage+1)}}>{currentPage+1}</Pagination.Item>:''}
+         {((currentPage+2)<=lastPage)?<Pagination.Item onClick={()=>{setUrl(currentPage+2)}}>{currentPage+2}</Pagination.Item>:''}
+         {((currentPage+3)<=lastPage)?<Pagination.Item onClick={()=>{setUrl(currentPage+3)}}>{currentPage+3}</Pagination.Item>:''}
 
-         <Pagination.Ellipsis />
-         <Pagination.Next />
-         <Pagination.Last/>
+         {(currentPage<lastPage)?<Pagination.Next onClick={()=>{setUrl(currentPage+1)}} />:""}
+         {((currentPage)<lastPage)?<Pagination.Last onClick={()=>{setUrl(lastPage)}} />: "" }
          
        </Pagination>
 
@@ -76,11 +83,11 @@ const Example=(props)=> {
       .then(response => response.blob())
       .then(function(myBlob) {
               // Create blob link to download
-          const url = window.URL.createObjectURL(
+          const dir = window.URL.createObjectURL(
             new Blob([myBlob]),
           );
           const link = document.createElement('a');
-          link.href = url;
+          link.href = dir;
           link.setAttribute(
             'download',
             `FileName.pdf`,
@@ -111,11 +118,11 @@ const Example=(props)=> {
       .then(response => response.blob())
       .then(function(myBlob) {
               // Create blob link to download
-          const url = window.URL.createObjectURL(
+          const dir = window.URL.createObjectURL(
             new Blob([myBlob]),
           );
           const link = document.createElement('a');
-          link.href = url;
+          link.href = dir;
           link.setAttribute(
             'download',
             `FileName.pdf`,
@@ -238,12 +245,38 @@ const data_trabajador={"id":1,"document":"17956388","full_name":"Alcimar Olivero
 
 const Nomina =()=>{
 
+    /* effect */
     const [mostrar,setMostrar]=useState(false);
     const [personal,setPersonal]=useState([data_trabajador]);
+    const [trabajador,setTrabajador]=useState(data_trabajador);
     const [actualizacion,setActualizacion]=useState(0);
+    /* alerta  */
     const [alerta,setAlerta]=useState(false);
 
-    const [trabajador,setTrabajador]=useState(data_trabajador);
+    /* paginado */
+    const [url,setUrl]=useState(1);
+    const handleUrl=(num)=>{
+      setUrl(num);
+    }
+
+    /* filtro */
+    const eqm_filtro={
+      'nomina':4,
+      'txt_busqueda':'',
+      'sexo':'',
+      'hijos':'',
+    }
+    const [filtro,setFiltro]=useState(eqm_filtro);
+
+
+    const actualizar_filtro=(e)=>{
+      const {name,value} = e.target;
+      setFiltro({...filtro,[name]:value});
+    }
+
+
+
+    
 
 
     const actualidar_trabajador=(e)=> {
@@ -252,9 +285,9 @@ const Nomina =()=>{
     }
 
     const Guardar_cambios=(e)=>{
-      console.log("enviando");
+     // console.log("enviando");
 
-      console.log(trabajador);
+     // console.log(trabajador);
 
 
       let requestOptions = {
@@ -276,37 +309,34 @@ const Nomina =()=>{
     }
 
    
-  let pagination={
-    "currentPage": 2,
-    "lastPage": 9,
-    "perPage": 15,
-    "total": 127  
-    };
+  const [pagination,setPagination]=useState({});
 
-let url=2;
+
 
   useEffect( ()=>{
-    fetch('http://127.0.0.1:8000/api/Nomina?page='+url)
+
+    let requestOptions = {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ filter:filtro,page:url })
+    };
+
+    fetch('http://127.0.0.1:8000/api/Nomina/',requestOptions)
     .then(response => response.json())
     .then(data => { 
-                console.log('====') ;
+              //  console.log('====') ;
                 setPersonal(data.data); 
-                pagination=data.pagination;
+
+                setPagination(data.pagination);
+                //pagination=data.pagination;
+
                 setMostrar(true);
-                console.log(data); console.log('====');
+               // console.log(data); console.log('====');
                 
               });
 
-  },[url,actualizacion])
+  },[url,actualizacion,filtro])
  
-  console.log('====') ;
- 
-  
-  console.log(pagination); console.log('===='); 
-
-
-
-
 
 
 
@@ -354,11 +384,11 @@ let url=2;
       .then(response => response.blob())
       .then(function(myBlob) {
               // Create blob link to download
-          const url = window.URL.createObjectURL(
+          const dir = window.URL.createObjectURL(
             new Blob([myBlob]),
           );
           const link = document.createElement('a');
-          link.href = url;
+          link.href = dir;
           link.setAttribute(
             'download',
             `pagoNomina.txt`,
@@ -391,14 +421,52 @@ let url=2;
                 setFunction={setAlerta}
                 valor={alerta}
               />
+              <InputGroup className="mb-3">
+   
+                <FormControl
+                  style={{maxWidth:'300px'}}
+                  placeholder="Buscar"
+                  aria-label="Buscar"
+                  aria-describedby="basic-addon2"
+                  name="txt_busqueda"
+                  onChange={actualizar_filtro} 
+                  value={filtro.txt_busqueda}
+                />
+                <Button style={{marginRight:'20px'}} variant="outline-primary" id="button-addon2">
+                  Button
+                </Button>
+
+                <Form.Select style={{maxWidth:'240px',marginRight:'20px'}} aria-label="Nomina" name="nomina" onChange={actualizar_filtro} value={filtro.nomina}>
+                  <option value={1}>Alto nivel</option>
+                  <option value={2}>Directivos</option>
+                  <option value={3}>Empleados contratados</option>
+                  <option value={6}>Obreros contratados</option>
+                  <option value={4}>Empleados fijos</option>
+                  <option value={7}>Obreros fijos</option>
+                  <option value={5}>Empleados jubilados</option>
+                  <option value={8}>Obreros jubilados</option>
+                </Form.Select>
+
+                <Form.Select style={{maxWidth:'120px',marginRight:'20px'}} aria-label="sexo" name="sexo" onChange={actualizar_filtro} value={filtro.sexo}>
+                  <option value=''>- - -</option>
+                  <option value='M'>Mujeres</option>
+                  <option value='H'>Hombres</option>
+                </Form.Select>
+
+                <Form.Select style={{maxWidth:'120px',marginRight:'20px'}} aria-label="hijos" name="hijos" onChange={actualizar_filtro} value={filtro.hijos}>
+                  <option value=''>- - -</option>
+                  <option value='0'>Sin hijos</option>
+                  <option value='1'>Con hijos</option>
+                </Form.Select>
+
+              </InputGroup>
+
+
+              
 
             <Button style={{float:'right',marginBottom:'15px'}} variant={'primary'} onClick={download_txt}>Descargar txt</Button>
                    
-            
-            
-            
-            {/*ok? J.length+' '+JSON.stringify(J[0]):'no'*/}
-            
+          
             
             <Table striped bordered hover>
                 <thead>
@@ -498,7 +566,7 @@ let url=2;
 
             {setMostrar? (  
             
-            <Paginacion pag={pagination}/>
+            <Paginacion pag={pagination} handle={handleUrl}/>
             
             )
             

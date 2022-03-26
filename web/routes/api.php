@@ -47,7 +47,7 @@ Route::post('employees/update', [EmployeeController::class, 'update']);
 Route::post('Carnet', [EmployeeController::class, 'Carnet']);
 Route::post('txt', [PayrollController::class, 'txt']);
 
-Route::get('Nomina', [EmployeeController::class, 'index']);
+Route::post('Nomina/', [EmployeeController::class, 'index']);
 
 Route::get('data_calculation', [EmployeeController::class, 'data_calculation_salary']);
 
