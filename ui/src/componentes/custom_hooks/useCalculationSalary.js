@@ -13,7 +13,7 @@ const round=(num,dec=2)=> {
 
 const useCalculationSalary=(Trabajador,data_calculation)=>{
 
-    var Empleados = [3,4];
+    var Empleados = [3,'3',4,'4'];
 
   const { Calculo_empleados,Calculo_obreros,profession,Bonus_Standard,Antiguedad} = data_calculation.data;
  
@@ -24,10 +24,8 @@ const useCalculationSalary=(Trabajador,data_calculation)=>{
   var days = difference/(1000 * 3600 * 24)
   var anos=Math.trunc(days/365);
 
-
-  
   //empleados
-  if(Empleados.indexOf(Trabajador.paysheet.id)==1){
+  if(Empleados.indexOf(Trabajador.paysheet.id)>=0){
     var datos={
       'base':round(Calculo_empleados[Trabajador['grade']][Trabajador['level']]),
       'P_antiguedad':round(Calculo_empleados[Trabajador['grade']][Trabajador['level']]*(Antiguedad[anos]/100)),

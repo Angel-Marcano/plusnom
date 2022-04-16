@@ -3,6 +3,7 @@ import {Table,Button,Modal,Tabs,Tab,Pagination,Alert,FormControl,InputGroup,Form
 import Tabla_data_payment from "../componentes_view/Tabla_data_payment";
 import Tabla_data_payment_config from "../componentes_view/Tabla_data_payment_config";
 import useFetch from "../custom_hooks/useFetch";
+import Modals from "../componentes_view/Modals";
 
 const style_th={
   textAlign: 'center',
@@ -169,7 +170,7 @@ const Example=(props)=> {
 
             <Tab eventKey="CALCULATION_DATA" title="Datos de calculo">
                   
-                <Tabla_data_payment_config data={props} handleClose={handleClose} />           
+                <Tabla_data_payment_config data={props} handleClose={handleClose} />
               
             </Tab>
             <Tab eventKey="CARNET" title="Carnet" >
@@ -376,11 +377,11 @@ const Nomina =()=>{
       let requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json','Access-Control-Allow-Origin': '*'},
-    
+        body: JSON.stringify({ id:filtro.nomina })
       };
     
     
-      fetch('http://127.0.0.1:8000/api/txt', requestOptions)
+      fetch('http://127.0.0.1:8000/api/txt/', requestOptions)
       .then(response => response.blob())
       .then(function(myBlob) {
               // Create blob link to download
@@ -392,6 +393,75 @@ const Nomina =()=>{
           link.setAttribute(
             'download',
             `pagoNomina.txt`,
+          );
+
+          // Append to html link element page
+          document.body.appendChild(link);
+
+          // Start download
+          link.click();
+
+          // Clean up and remove the link
+          link.parentNode.removeChild(link);
+      });
+    };
+    
+    const download_txt_fedding=()=>{
+
+      let requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json','Access-Control-Allow-Origin': '*'},
+        body: JSON.stringify({ id:filtro.nomina })
+      };
+    
+    
+      fetch('http://127.0.0.1:8000/api/txt_feeding/', requestOptions)
+      .then(response => response.blob())
+      .then(function(myBlob) {
+              // Create blob link to download
+          const dir = window.URL.createObjectURL(
+            new Blob([myBlob]),
+          );
+          const link = document.createElement('a');
+          link.href = dir;
+          link.setAttribute(
+            'download',
+            `pago_Nomina_Alimentacion.txt`,
+          );
+
+          // Append to html link element page
+          document.body.appendChild(link);
+
+          // Start download
+          link.click();
+
+          // Clean up and remove the link
+          link.parentNode.removeChild(link);
+      });
+    };
+
+
+    const download_excel=()=>{
+
+      let requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json','Access-Control-Allow-Origin': '*'},
+        body: JSON.stringify({ id:filtro.nomina })
+      };
+    
+    
+      fetch('http://127.0.0.1:8000/api/excel/', requestOptions)
+      .then(response => response.blob())
+      .then(function(myBlob) {
+              // Create blob link to download
+          const dir = window.URL.createObjectURL(
+            new Blob([myBlob]),
+          );
+          const link = document.createElement('a');
+          link.href = dir;
+          link.setAttribute(
+            'download',
+            `pagoNomina.xlsx`,
           );
 
           // Append to html link element page
@@ -421,6 +491,7 @@ const Nomina =()=>{
                 setFunction={setAlerta}
                 valor={alerta}
               />
+
               <InputGroup className="mb-3">
    
                 <FormControl
@@ -463,9 +534,16 @@ const Nomina =()=>{
 
 
               
-
+            <Button style={{float:'right',marginBottom:'15px',marginLeft:'5px'}} variant={'primary'} onClick={download_excel}>Descargar excel</Button>
+            
             <Button style={{float:'right',marginBottom:'15px'}} variant={'primary'} onClick={download_txt}>Descargar txt</Button>
-                   
+
+            <Button style={{float:'right',marginBottom:'15px', marginRight:'5px'}} variant={'primary'} onClick={download_txt_fedding}>Descargar txt Alimentación</Button>
+            
+             <Modals 
+             label_boton="Agregar trabajador"
+              titulo="Agregar Trabajador"
+             />
           
             
             <Table striped bordered hover>

@@ -79,15 +79,11 @@ const caltulation_salary=(Trabajador,data_calculation)=>{
 
 const Table_data_payment=(props)=>{
 
-    const {Trabajador,data_calculation}=props.data;    
+    const {Trabajador,data_calculation}=props.data;
+    
+
     var result2=caltulation_salary(Trabajador,data_calculation);
     var result=useCalculationSalary(Trabajador,data_calculation);
-
-    console.log('salario antigua manera');
-    console.log(result);
-
-    console.log('salario :');
-    console.log(result);
 
     return(
 
@@ -106,7 +102,8 @@ const Table_data_payment=(props)=>{
                     <th style={style_th}>
                          Prima de hijos
                     </th>
-                    <th style={style_th}>
+                    
+                    <th colSpan={2} style={style_th}>
                          Total asignación
                     </th>     
 
@@ -127,7 +124,7 @@ const Table_data_payment=(props)=>{
                             <td style={style_td_table}>
                              {result.P_hijos}
                             </td>
-                            <td style={style_td_table}>
+                            <td colSpan={2} style={style_td_table}>
                              {round(result.base+result.P_Profesion+result.P_antiguedad+result.P_hijos)}
                             </td>
                         </tr>
@@ -146,6 +143,9 @@ const Table_data_payment=(props)=>{
                           </th>
                           <th style={style_th}>
                             Caja de ahorro
+                          </th>
+                          <th style={style_th}>
+                            Fondo juvilación
                           </th>
                           <th style={style_th}>
                             Total deducciones
@@ -167,11 +167,15 @@ const Table_data_payment=(props)=>{
                             {0}
                             </td>
                             <td style={style_td_table}>
+                            {round(((result.base+result.P_Profesion+result.P_antiguedad+result.P_hijos)*0.03)/2 )}
+                            </td>
+                            <td colSpan={2} style={style_td_table}>
                             {
                               round(
                               round(((result.base+result.P_Profesion+result.P_antiguedad+result.P_hijos)*12/52)*0.04*2 )*2+
                               round(((result.base+result.P_Profesion+result.P_antiguedad+result.P_hijos)*12/52)*0.005*2 )*2+
-                              round(((result.base+result.P_Profesion+result.P_antiguedad+result.P_hijos)*0.01) )
+                              round(((result.base+result.P_Profesion+result.P_antiguedad+result.P_hijos)*0.01) )+
+                              round(((result.base+result.P_Profesion+result.P_antiguedad+result.P_hijos)*0.03)/2 )
                               )
                             }
                             </td>
@@ -191,7 +195,7 @@ const Table_data_payment=(props)=>{
                           <th style={style_th}>
                             Alimentacion (final de mes)
                           </th>
-                          <th style={style_th}>
+                          <th colSpan={2} style={style_th}>
                             Remuneración total quincenal
                           </th>     
 
@@ -230,7 +234,7 @@ const Table_data_payment=(props)=>{
                             <td style={style_td_table}>
                             {data_calculation['data']['Bonus_Standard']['feeding']}
                             </td>
-                            <td style={style_td_table}>
+                            <td colSpan={2} style={style_td_table}>
                             {//15
                              round(
                               (result.base+result.P_Profesion+result.P_antiguedad+result.P_hijos-

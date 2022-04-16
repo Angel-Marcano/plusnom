@@ -44,7 +44,7 @@ const round=(num,dec=2)=> {
   }
 
 const caltulation_salary=(Trabajador,data_calculation)=>{
-  var Empleados = [3,4];
+  var Empleados = [3,'3',4,'4'];
 
   const { Calculo_empleados,Calculo_obreros,profession,Bonus_Standard,Antiguedad} = data_calculation.data;
  
@@ -58,7 +58,7 @@ const caltulation_salary=(Trabajador,data_calculation)=>{
 
   
   //empleados
-  if(Empleados.indexOf(Trabajador.paysheet.id)==1){
+  if(Empleados.indexOf(Trabajador.paysheet.id)>=0){
     var datos={
       'base':round(Calculo_empleados[Trabajador['grade']][Trabajador['level']]),
       'P_antiguedad':round(Calculo_empleados[Trabajador['grade']][Trabajador['level']]*(Antiguedad[anos]/100)),
@@ -74,6 +74,13 @@ const caltulation_salary=(Trabajador,data_calculation)=>{
 const Table_data_payment_config=(props)=>{
 
     const {Trabajador,data_calculation,test,guardar,msj_guardado}=props.data;
+
+    console.log("A => ",Trabajador);
+    console.log("B => ",data_calculation);
+    console.log("C => ",test);
+    console.log("D => ",guardar);
+    console.log("E => ",msj_guardado);
+
     
     const [mod, setMod] = useState(false);
 
@@ -187,7 +194,10 @@ const Table_data_payment_config=(props)=>{
                             <td colSpan={2} style={style_td_table}>
                            
                             <Form.Select aria-label="Numero de hijos" name="grade" onChange={actualizar} value={Trabajador.grade}>
+                                
+
                                  {
+                                 
                                  (Trabajador.level_profession=='BACHILLER')?
                                  
                                  <>
@@ -219,6 +229,9 @@ const Table_data_payment_config=(props)=>{
                                   <option value="PIII">PIII</option>
                                  </>
                                  :<></>
+
+                                 
+
                                 
                                 } 
                                   
