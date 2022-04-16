@@ -141,16 +141,16 @@ class PayrollController extends Controller
         return response()->json(['mensaje'=>'exito']);
     }
 
-    public function NominaExcel_download(){
+    public function NominaExcel_download(Request $request){
        
        $query = Employee::withCount('payrolls')
-       ->with('paysheet')->where('cpaysheet',4)->get();
+       ->with('paysheet')->where('cpaysheet',3)->get();
 
        
         $data=collect($query);
 
         //dd($data[0]);
-        return Excel::download(new NominaExcel($data), 'DetallesOdsExcel.xlsx');
+        return Excel::download(new NominaExcel($data), 'Nomina de pago.xlsx');
     
     }
     
@@ -203,9 +203,8 @@ class PayrollController extends Controller
 
     public function txt(Request $request)
     {
-
         $query = paysheet::with('Employye')
-        ->where('id','=',4)->first();
+        ->where('id','=',$request->id)->first();
 
         $Total_txt=0;
        
@@ -288,4 +287,94 @@ class PayrollController extends Controller
     
         return response()->download($file_down, 'filename.txt', $headers);
     }
+
+
+    public function txt_alimentacion(Request $request)
+    {
+        $query = paysheet::with('Employye')
+        ->where('id','=',$request->id)->first();
+
+        $Bonus_Standard=json_decode(calculation_data::find(6)->data);
+
+        $Total_txt=0;
+       
+        foreach ($query->Employye as $Employee) {
+            $salary=$Bonus_Standard->feeding;
+            $Employee->mount=$salary;
+            $salary=str_replace(",", ".", $salary);
+            
+            $Total_txt+=floatval($salary);
+        }
+        
+        $Total_txt=str_replace(".",'', $Total_txt);
+        $relleno="";
+        $relleno_de_ceros=13-strlen($Total_txt);
+
+        for ($i=0; $i < $relleno_de_ceros; $i++) { 
+            $relleno=$relleno.'0';
+        }
+
+        $Total_txt=$relleno.$Total_txt;
+       // dd($Total_txt);
+
+        $file = fopen("txts/archivo.txt", "w");
+        $nombre_institucion="H"."ALCALDIA BERMUDEZ                       ";//ojo con la cantidad de espacios
+        $cuenta_empresa="01020438225578891433";
+        $n_archivo="03";
+        $fecha="22/02/22";
+        $monto_total=$Total_txt;
+        
+        $codigo="03291 ";
+        $codigo_employees='771';
+
+
+        fwrite($file,$nombre_institucion.$cuenta_empresa.$n_archivo.$fecha.$monto_total.$codigo. PHP_EOL);
+
+        foreach ($query->Employye as $Employee) {
+            /* calculo para el monto con relleno*/ 
+            $mount_employee=str_replace(",",'',$Bonus_Standard->feeding);
+            $relleno='';
+            $relleno_mount=11-mb_strlen($mount_employee);
+            for ($i=0; $i < $relleno_mount; $i++) { 
+                $relleno=$relleno.'0';
+            }
+            $mount_employee=$relleno.$mount_employee;
+
+            /*nombre con relleno*/ 
+            $name_employee=$Employee->full_name;
+            $relleno='';
+
+           // dd(mb_strlen('Cleobaldo Cedeño'));
+            $relleno_name=40-mb_strlen($name_employee);
+            for ($i=0; $i < $relleno_name; $i++) { 
+                $relleno=$relleno.' ';
+            }
+            $name_employee=$name_employee.$relleno;
+
+            /*Cedula con relleno*/ 
+            $document_employee=$Employee->document;
+            $relleno='';
+            $relleno_document=9-mb_strlen($document_employee);
+            for ($i=0; $i < $relleno_document; $i++) { 
+                $relleno=$relleno.'0';
+            }
+            $document_employee=$relleno.$document_employee;
+
+            
+            $line=$Employee->account_type.$Employee->bank_account.$mount_employee.$Employee->account_type.$codigo_employees.$name_employee.'0'.$document_employee.'0'.$codigo;
+            fwrite($file, $line. PHP_EOL);
+        }
+
+        fclose($file);
+
+        $file_down= "txts/archivo.txt";
+
+        $headers = array(
+                  'Content-Type: application/txt',
+                );
+    
+        return response()->download($file_down, 'filename.txt', $headers);
+    }
+
+
 }

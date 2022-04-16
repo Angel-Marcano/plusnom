@@ -28,20 +28,57 @@ class NominaExcel implements FromCollection, WithHeadings, WithMapping, WithColu
         return [
             AfterSheet::class => function (AfterSheet $event) {
                 $s = $event->sheet->getDelegate();
-                $s->getColumnDimension('A')->setWidth(40);
-                $s->getColumnDimension('B')->setWidth(14);
-                $s->getColumnDimension('C')->setWidth(14);
-                $s->getColumnDimension('D')->setWidth(30);
-                $s->getColumnDimension('E')->setWidth(14);
-                $s->getColumnDimension('F')->setWidth(14);
-                $s->getColumnDimension('G')->setWidth(18);
-                $s->getColumnDimension('H')->setWidth(24);
-                $s->getColumnDimension('I')->setWidth(18);
+                $s->getColumnDimension('A')->setWidth(14);
+                $s->getColumnDimension('B')->setWidth(22);
+                $s->getColumnDimension('C')->setWidth(18);
+                $s->getColumnDimension('D')->setWidth(18);
+                $s->getColumnDimension('E')->setWidth(18);
+                $s->getColumnDimension('F')->setWidth(18);
+                $s->getColumnDimension('G')->setWidth(8);
+                $s->getColumnDimension('H')->setWidth(12);
+                $s->getColumnDimension('I')->setWidth(12);
+                $s->getColumnDimension('J')->setWidth(12);
+                $s->getColumnDimension('K')->setWidth(12);
+                $s->getColumnDimension('L')->setWidth(12);
+                $s->getColumnDimension('M')->setWidth(12);
+                $s->getColumnDimension('N')->setWidth(12);
+                $s->getColumnDimension('O')->setWidth(12);
+                $s->getColumnDimension('P')->setWidth(12);
+                $s->getColumnDimension('Q')->setWidth(12);
+                $s->getColumnDimension('R')->setWidth(12);
+                $s->getColumnDimension('S')->setWidth(12);
+                $s->getColumnDimension('T')->setWidth(12);
+                $s->getColumnDimension('U')->setWidth(12);
+                $s->getColumnDimension('V')->setWidth(12);
+                $s->getColumnDimension('W')->setWidth(12);
+                $s->getColumnDimension('X')->setWidth(12);
+                $s->getColumnDimension('Y')->setWidth(12);
+                $s->getColumnDimension('Z')->setWidth(12);
                 
 
-                //$s->getStyle('C2:C9999')->getAlignment()->setWrapText(true);
-                //$s->getStyle('D2:D9999')->getAlignment()->setWrapText(true);
-                //$s->getStyle('K2:K9999')->getAlignment()->setWrapText(true);
+                $s->getStyle('C2:C9999')->getAlignment()->setWrapText(true);
+                $s->getStyle('F2:F9999')->getAlignment()->setWrapText(true);
+                $s->getStyle('J2:J9999')->getAlignment()->setWrapText(true);
+                $s->getStyle('K2:K9999')->getAlignment()->setWrapText(true);
+                $s->getStyle('L2:L9999')->getAlignment()->setWrapText(true);
+                $s->getStyle('M2:M9999')->getAlignment()->setWrapText(true);
+                $s->getStyle('N2:N9999')->getAlignment()->setWrapText(true);
+
+                $s->getStyle('O2:O9999')->getAlignment()->setWrapText(true);
+                $s->getStyle('P2:P9999')->getAlignment()->setWrapText(true);
+                $s->getStyle('Q2:Q9999')->getAlignment()->setWrapText(true);
+                $s->getStyle('R2:R9999')->getAlignment()->setWrapText(true);
+                $s->getStyle('S2:S9999')->getAlignment()->setWrapText(true);
+
+                $s->getStyle('T2:T9999')->getAlignment()->setWrapText(true);
+                $s->getStyle('U2:U9999')->getAlignment()->setWrapText(true);
+                $s->getStyle('V2:V9999')->getAlignment()->setWrapText(true);
+                $s->getStyle('W2:W9999')->getAlignment()->setWrapText(true);
+                $s->getStyle('X2:X9999')->getAlignment()->setWrapText(true);
+                $s->getStyle('Y2:Y9999')->getAlignment()->setWrapText(true);
+                $s->getStyle('Z2:Z9999')->getAlignment()->setWrapText(true);
+
+
                 //$s->getStyle('A1:I1')->getAlignment()->setWrapText(true);
                 $s->getStyle('A1:Z9')->getFont()->setBold(true);
                 
@@ -155,7 +192,7 @@ class NominaExcel implements FromCollection, WithHeadings, WithMapping, WithColu
             'COLUMNA24'               => " Caja AH ",
             'COLUMNA25'               => " Total deducciones ",
             'COLUMNA26'               => " Total quincenal ",
-            'COLUMNA27'               => "  ",
+            'COLUMNA27'               => " Alimentacion ",
         ]);
 
 
@@ -215,7 +252,9 @@ class NominaExcel implements FromCollection, WithHeadings, WithMapping, WithColu
             ((($data_c->$Grade->$Level)+($data['number_children']*$Bonus_Standard->Standard)+($data_c->$Grade->$Level*($Antiquity[$Employee_Antiquity]/100))+($data_c->$Grade->$Level*($profession->$Employee_profesional/100))) *0.03/2) +
             ((($data_c->$Grade->$Level)+($data['number_children']*$Bonus_Standard->Standard)+($data_c->$Grade->$Level*($Antiquity[$Employee_Antiquity]/100))+($data_c->$Grade->$Level*($profession->$Employee_profesional/100))) *0) 
              
-            )
+            ),
+            'COLUMNA27'=>$Bonus_Standard->feeding
+
 
 
             ]);

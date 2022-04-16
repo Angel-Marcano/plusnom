@@ -30,7 +30,7 @@ class EmployeeController extends Controller
             }//number_children
             if ( array_key_exists('hijos', $filters) && $filters['hijos']!='') {
                 if($filters['hijos']=='0'){
-                    $query->where('number_children',0);
+                    $query->where('number_children','=',0);
                 }else{
                     $query->where('number_children','>',0);
                 }
@@ -151,6 +151,49 @@ class EmployeeController extends Controller
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
+
+    public function create(Request $request)
+    {   
+        $Employee=$request->Trabajador;
+
+        $E = Employee::where('document',$Employee['document'])->first();;
+ 
+        if ($E !== null) {
+            return json_encode('{resultado:Trabajador ya existe}',true);
+        }
+
+        $Employee=$request->Trabajador;
+       // var_dump($Employee['document']);
+        $E= new Employee();
+        //var_dump($E);
+
+        $E->document=$Employee['document'];                 // cedula
+        $E->full_name=$Employee['full_name'];               // nombre completo
+        $E->chargue=$Employee['chargue'];                   // cargo
+        $E->division=$Employee['division'];                 // division
+        $E->admission_date=$Employee['admission_date'];     // fecha de ingreso
+        $E->level_profession=$Employee['level_profession']; // nivel profesional
+        $E->cpaysheet=$Employee['cpaysheet'];               // codigo nomina
+        $E->cpayments='1';               // codigo de pago
+        $E->rank=isset($Employee['rank'])?$Employee['rank']:null;                         // codigo de rango
+        $E->class=$Employee['class']?$Employee['class']:null;                       // codigo de clase
+        $E->grade=$Employee['grade']?$Employee['grade']:null;                       // codigo de grado
+        $E->level=$Employee['level']?$Employee['level']:null;                       // codigo de nivel
+        $E->type_employee=$Employee['cpaysheet'];       // codigo de pago
+        $E->number_children=$Employee['number_children'];   // numero de hijos
+        $E->bank_account=$Employee['bank_account'];         // cuenta bancaria
+        $E->account_type=$Employee['account_type'];         // tipo de cuenta
+
+        $E->save();
+
+       // return json_decode($E);
+
+       // retornar la data para la vista .... recargar? o que ? ....
+        return json_encode('{resultado:exitoso}',true);
+
+        
+    }
+
     public function update(Request $request)
     {
         $Employee=$request->Trabajador;
@@ -174,6 +217,12 @@ class EmployeeController extends Controller
         $E->number_children=$Employee['number_children'];   // numero de hijos
         $E->bank_account=$Employee['bank_account'];         // cuenta bancaria
         $E->account_type=$Employee['account_type'];         // tipo de cuenta
+        $E->sexo=$Employee['sexo'];
+        $E->blood_type=$Employee['blood_type'];
+        $E->phone=$Employee['phone'];
+        $E->photo=$Employee['photo'];
+        
+        
 
         $E->save();
 

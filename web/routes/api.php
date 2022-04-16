@@ -28,11 +28,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('parameters', ParameterController::class)
         ->except(['index', 'store', 'destroy']);
 });
-Route::post('employees/import', [EmployeeController::class, 'importEmployees']);
+
+*/
 
 Route::post('login', [ManageTokenController::class, 'login']);
 
-*/
 
 Route::post('employees/import', [EmployeeController::class, 'importEmployees']);
 Route::post('Constancia_api', [EmployeeController::class, 'constancia'])->name('Constancia_api');
@@ -44,8 +44,11 @@ Route::post('configuracion_bone/set', [PayrollController::class, 'configuracion_
 Route::post('configuracion_profesion/set', [PayrollController::class, 'configuracion_profesion_set'])->name('configuracion_profesion_set');
 Route::post('employees/import', [EmployeeController::class, 'importEmployees']);
 Route::post('employees/update', [EmployeeController::class, 'update']);
+Route::post('employees/create', [EmployeeController::class, 'create']);
 Route::post('Carnet', [EmployeeController::class, 'Carnet']);
-Route::post('txt', [PayrollController::class, 'txt']);
+Route::post('txt/', [PayrollController::class, 'txt']);
+Route::post('txt_feeding/', [PayrollController::class, 'txt_alimentacion']);
+Route::post('excel/', [PayrollController::class, 'NominaExcel_download']);
 
 Route::post('Nomina/', [EmployeeController::class, 'index']);
 
