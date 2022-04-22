@@ -1,0 +1,24 @@
+on:
+  push:
+    branches:
+      - master
+
+name: 🚀 AutoDeploy Metalsigmaa backend
+jobs:
+  web-deploy:
+    name: 🎉 Pasos
+    runs-on: ubuntu-18.04
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v2
+
+      - name: listando archivos de salida
+        run: find build/ -print
+
+      - name: 📂 sincronizando archivos con serve
+        uses: SamKirkland/FTP-Deploy-Action@4.2.0
+        with:
+          server: ftp.residencialosrobles.com
+          username: ${{secrets.FTP_USER_METALSIGMA}}
+          password: ${{secrets.FTP_PASSWORD_METALSIGMA}}
+          local-dir: build/
