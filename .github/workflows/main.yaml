@@ -12,9 +12,6 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v2
 
-      - name: listando archivos de salida
-        run: find build/ -print
-
       - name: 📂 sincronizando archivos con serve
         uses: SamKirkland/FTP-Deploy-Action@4.2.0
         with:
