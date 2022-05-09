@@ -159,7 +159,7 @@ class EmployeeController extends Controller
         $E = Employee::where('document',$Employee['document'])->first();;
  
         if ($E !== null) {
-            return json_encode('{resultado:Trabajador ya existe}',true);
+            return json_encode('Trabajador ya existe',true);
         }
 
         $Employee=$request->Trabajador;
@@ -189,7 +189,7 @@ class EmployeeController extends Controller
        // return json_decode($E);
 
        // retornar la data para la vista .... recargar? o que ? ....
-        return json_encode('{resultado:exitoso}',true);
+        return json_encode('exitoso',true);
 
         
     }

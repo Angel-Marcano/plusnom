@@ -372,6 +372,44 @@ const Nomina =()=>{
       document.getElementById('modal_boton').click();
     }
 
+    const img_qr=(e)=>{
+
+      //console.log(e.document);
+
+      let requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json','Access-Control-Allow-Origin': '*'},
+       // body: JSON.stringify({ id:filtro.nomina })
+      };
+    
+      
+      fetch('https://quickchart.io/qr?text=Cedula:'+e.document+', Nombre: '+e.full_name+', cargo:'+e.chargue, requestOptions)
+      .then(response => response.blob())
+      .then(function(myBlob) {
+              // Create blob link to download
+          const dir = window.URL.createObjectURL(
+            new Blob([myBlob]),
+          );
+          const link = document.createElement('a');
+          link.href = dir;
+          link.setAttribute(
+            'download',
+            'img_qr.png',
+          );
+
+          // Append to html link element page
+          document.body.appendChild(link);
+
+          // Start download
+          link.click();
+
+          // Clean up and remove the link
+          link.parentNode.removeChild(link);
+      });
+    };
+
+    
+
     const download_txt=()=>{
 
       let requestOptions = {
@@ -608,6 +646,7 @@ const Nomina =()=>{
                         </td>
                         <td>
                             <Button variant="primary"  onClick={()=>{detallesTrabajador(p)}}>Detalles</Button>
+                            <Button variant="primary"  onClick={()=>{img_qr(p)}}>Imagen QR</Button>
                             
                         </td>
                       </tr>

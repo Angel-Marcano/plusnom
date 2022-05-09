@@ -16,8 +16,8 @@ function  Modals(props) {
     'sexo':'Masculino',
     'number_children':0,
     'level_profession':'BACHILLER',
-    'grade':'1',
-    'level':'BI',
+    'grade':'BI',
+    'level':'1',
     'admission_date':'',
     'chargue':'',
     'bank_account':'',
@@ -54,9 +54,13 @@ function  Modals(props) {
        .then(response => response.json())
        .then(data => {
          
-         console.log(data);
-                   
-         });
+         if(data==="exitoso"){
+           alert("Empleado guardado");
+           window.location.replace('');    
+         }else{
+           alert("Documento de identidad ya existe.");
+         }
+        });
 
 
    }
